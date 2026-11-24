@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "1.0.0",
+  "name": "FlowLens Evaluation Rubric",
+  "categories": [
+    { "key": "performance", "name": "Performance", "weight": 0.20 },
+    { "key": "accessibility", "name": "Accessibility", "weight": 0.20 },
+    { "key": "responsiveness", "name": "Responsiveness", "weight": 0.15 },
+    { "key": "visual_consistency", "name": "Visual Consistency", "weight": 0.10 },
+    { "key": "layout_stability", "name": "Layout Stability During Scroll", "weight": 0.10 },
+    { "key": "ux_heuristics", "name": "UX Heuristics", "weight": 0.15 },
+    { "key": "seo_basics", "name": "SEO Basics", "weight": 0.10 }
+  ]
+}

@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# TypeScript compilation output
+dist/
+build/
+*.tsbuildinfo
+
+# Environment & Secrets (NEVER commit secrets)
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Temporary files and evidence cache
+tmp/
+temp/
+captures/
+screenshots/
+videos/

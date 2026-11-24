@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "1.0.0",
+  "name": "FlowLens Evaluation Rubric",
+  "formulaDescription": "Weighted average of 7 measured categories normalized from 0 to 100",
+  "categories": [
+    {
+      "key": "performance",
+      "name": "Performance",
+      "weight": 0.20,
+      "description": "Lighthouse programmatically or PageSpeed Insights. Measures LCP, CLS, TBT/INP, FCP, total page weight, request count, heaviest assets, images served > 2x rendered size, and images missing width/height.",
+      "metrics": ["lcp_ms", "cls", "tbt_ms", "fcp_ms", "total_page_weight_bytes", "request_count", "oversized_images_count", "missing_dimensions_count"]
+    },
+    {
+      "key": "accessibility",
+      "name": "Accessibility",
+      "weight": 0.20,
+      "description": "axe-core audit grouped by impact (critical, serious, moderate, minor), contrast, missing alt text, heading order, form labels, and mobile tap-target size (WCAG 2.2: at least 24x24 px).",
+      "metrics": ["critical_violations", "serious_violations", "moderate_violations", "minor_violations", "tap_target_violations"]
+    },
+    {
+      "key": "responsiveness",
+      "name": "Responsiveness",
+      "weight": 0.15,
+      "description": "Mobile capture testing (390x844). Detects horizontal overflow (scrollWidth > innerWidth), elements causing overflow, body text under 12 px, and missing viewport meta tag.",
+      "metrics": ["has_horizontal_overflow", "overflow_elements_count", "text_under_12px_count", "has_viewport_meta"]
+    },
+    {
+      "key": "visual_consistency",
+      "name": "Visual Consistency",
+      "weight": 0.10,
+      "description": "Computed styles audit counting font families, font sizes, unique colors, and spacing values. Flags excess (>3 font families, >12 font sizes) and extracts the palette and type scale.",
+      "metrics": ["font_family_count", "font_size_count", "unique_color_count", "extracted_palette", "extracted_type_scale"]
+    },
+    {
+      "key": "layout_stability",
+      "name": "Layout Stability During Scroll",
+      "weight": 0.10,
+      "description": "PerformanceObserver measurement of layout shifts during active scrolling pass, isolating scroll-induced shifts from initial load shifts.",
+      "metrics": ["scroll_cumulative_layout_shift", "shift_event_count"]
+    },
+    {
+      "key": "ux_heuristics",
+      "name": "UX Heuristics",
+      "weight": 0.15,
+      "description": "Measured heuristics: primary CTA visible above the fold on desktop and mobile, navigation presence and item count, sticky header behavior, broken internal links (capped at 50), broken images, console errors, failed network requests, and forms with labels.",
+      "metrics": ["cta_above_fold", "nav_present", "sticky_header_working", "broken_links_count", "broken_images_count", "console_errors_count", "failed_requests_count", "unlabeled_forms_count"]
+    },
+    {
+      "key": "seo_basics",
+      "name": "SEO Basics",
+      "weight": 0.10,
+      "description": "Title and meta description length checks, exactly one h1 check, canonical tag, Open Graph tags, favicon, and robots.txt / sitemap.xml presence verification.",
+      "metrics": ["title_optimal", "meta_desc_optimal", "h1_count", "has_canonical", "has_open_graph", "has_favicon", "has_robots_txt", "has_sitemap_xml"]
+    }
+  ]
+}

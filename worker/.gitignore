@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Compilation output
+dist/
+build/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Playwright artifacts & video captures
+videos/
+screenshots/
+test-results/
+playwright-report/
+temp/
+tmp/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS artifacts
+.DS_Store
+Thumbs.db
