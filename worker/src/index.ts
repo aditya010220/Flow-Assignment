@@ -97,6 +97,6 @@ async function runScan(
   }
 }
 
-app.listen(PORT, () => {
-  console.info(`[FlowLens Worker] Listening on port ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.info(`[FlowLens Worker] Listening on port ${PORT} (0.0.0.0)`);
 });

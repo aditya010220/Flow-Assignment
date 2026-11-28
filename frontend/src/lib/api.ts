@@ -200,22 +200,16 @@ const MOCK_SCAN_REPORT: ScanReport = {
 
 export class ApiClient {
   public static async createScan(url: string, options?: ScanOptions): Promise<{ scanId: string; status: ScanStatus }> {
-    try {
-      const res = await fetch(`${API_BASE}/scans`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url, options }),
-      });
-      const json = await res.json();
-      if (!res.ok || !json.success) {
-        throw new Error(json.error?.message || 'Failed to create scan.');
-      }
-      return json.data;
-    } catch (err: any) {
-      console.warn('[ApiClient.createScan fallback]:', err.message);
-      // Return synthetic scanId for local frontend testing
-      return { scanId: 'demo-scan-uuid-1', status: 'queued' };
+    const res = await fetch(`${API_BASE}/scans`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, options }),
+    });
+    const json = await res.json();
+    if (!res.ok || !json.success) {
+      throw new Error(json.error?.message || 'Failed to create scan.');
     }
+    return json.data;
   }
 
   public static async getScanStatus(scanId: string): Promise<{ scanId: string; status: ScanStatus; overallScore?: number }> {

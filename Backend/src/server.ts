@@ -12,8 +12,8 @@ async function bootstrap() {
 
   const app = createApp();
 
-  app.listen(config.port, () => {
-    console.info(`[FlowLens API] Listening on port ${config.port} (${config.env})`);
+  app.listen(config.port, '0.0.0.0', () => {
+    console.info(`[FlowLens API] Listening on port ${config.port} (${config.env}) on 0.0.0.0`);
     console.info(`[FlowLens API] Endpoints ready at http://localhost:${config.port}/api`);
   });
 }

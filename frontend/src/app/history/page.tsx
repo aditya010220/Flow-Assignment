@@ -100,7 +100,7 @@ export default function HistoryPage() {
                     <td className="px-6 py-4 text-right font-bold">
                       {s.overallScore !== null ? `${s.overallScore} / 100` : '—'}
                     </td>
-                    <td className="px-6 py-4 text-xs text-black/60">
+                    <td className="px-6 py-4 text-xs text-black/60" suppressHydrationWarning>
                       {new Date(s.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 text-right">

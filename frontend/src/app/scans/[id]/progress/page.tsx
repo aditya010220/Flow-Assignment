@@ -40,6 +40,8 @@ export default function ScanProgressPage({ params }: { params: Promise<{ id: str
         }
       } catch (err: any) {
         console.warn('Poll error:', err.message);
+        clearInterval(interval);
+        setErrorMsg(err.message || 'Scan not found.');
       }
     };
 

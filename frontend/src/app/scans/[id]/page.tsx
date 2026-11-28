@@ -77,7 +77,7 @@ export default function ScanReportPage({ params }: { params: Promise<{ id: strin
             <span className="text-xs text-black/50 font-mono">ID: {report.scanId}</span>
           </div>
           <h1 className="text-2xl font-bold text-black font-mono break-all">{report.targetUrl}</h1>
-          <p className="text-xs text-black/60 mt-1">
+          <p className="text-xs text-black/60 mt-1" suppressHydrationWarning>
             Scanned on {new Date(report.summary.scannedAt).toLocaleString()} • {report.summary.pagesScanned} pages evaluated
           </p>
         </div>

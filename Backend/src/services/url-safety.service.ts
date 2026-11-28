@@ -1,16 +1,20 @@
 import dns from 'dns';
+import net from 'net';
 import { URL } from 'url';
 
 export class UrlSafetyService {
   /**
    * Checks if an IPv4 or IPv6 address belongs to private/internal/cloud metadata subnets.
+   * Only operates on valid IP strings (returns false if input is not an IP address).
    */
   public static isPrivateIp(ip: string): boolean {
+    const ipType = net.isIP(ip);
+
     // IPv4 checks
-    if (ip.includes('.')) {
+    if (ipType === 4) {
       const parts = ip.split('.').map((p) => parseInt(p, 10));
       if (parts.length !== 4 || parts.some((p) => isNaN(p) || p < 0 || p > 255)) {
-        return true;
+        return false;
       }
 
       const [b0, b1] = parts;
@@ -27,12 +31,14 @@ export class UrlSafetyService {
       if (b0 === 192 && b1 === 168) return true;
       // 169.254.0.0/16 (Link-Local, AWS/GCP/Azure Metadata 169.254.169.254)
       if (b0 === 169 && b1 === 254) return true;
-      // Broadcast & documentation
-      if (b0 >= 224) return true; // Multicast & Future use
+      // 224.0.0.0+ (Multicast & Future use)
+      if (b0 >= 224) return true;
+
+      return false;
     }
 
     // IPv6 checks
-    if (ip.includes(':')) {
+    if (ipType === 6) {
       const lower = ip.toLowerCase();
       // ::1 (Loopback)
       if (lower === '::1' || lower === '0:0:0:0:0:0:0:1') return true;
@@ -42,11 +48,13 @@ export class UrlSafetyService {
       }
       // fc00::/7 (Unique Local Address)
       if (lower.startsWith('fc') || lower.startsWith('fd')) return true;
-      // IPv4 mapped IPv6 (::ffff:127.0.0.1)
+      // IPv4-mapped IPv6 (::ffff:127.0.0.1)
       if (lower.startsWith('::ffff:')) {
         const v4Part = lower.replace('::ffff:', '');
         return this.isPrivateIp(v4Part);
       }
+
+      return false;
     }
 
     return false;
@@ -72,6 +80,7 @@ export class UrlSafetyService {
 
     const hostname = parsed.hostname.toLowerCase();
 
+    // Loopback check
     if (
       hostname === 'localhost' ||
       hostname.endsWith('.localhost') ||
@@ -82,8 +91,8 @@ export class UrlSafetyService {
       return { valid: false, error: 'SSRF Protection: Access to localhost or loopback destinations is forbidden.' };
     }
 
-    // Direct IP check
-    if (this.isPrivateIp(hostname)) {
+    // Direct IP check (only if hostname is an IP address literal)
+    if (net.isIP(hostname) !== 0 && this.isPrivateIp(hostname)) {
       return { valid: false, error: 'SSRF Protection: Access to private, local, or cloud metadata IP ranges is forbidden.' };
     }
 
