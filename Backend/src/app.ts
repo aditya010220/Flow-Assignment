@@ -17,6 +17,11 @@ export function createApp() {
   app.use(express.json({ limit: '10mb' }));
   app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+  // Root redirect to /api
+  app.get('/', (req, res) => {
+    res.redirect('/api');
+  });
+
   // Health check
   app.get('/api/health', (req, res) => {
     res.json({

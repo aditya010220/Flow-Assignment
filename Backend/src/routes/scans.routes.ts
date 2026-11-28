@@ -4,6 +4,23 @@ import { validateCreateScan } from '../middleware/validation.middleware';
 
 const router = Router();
 
+// API Overview Index
+router.get('/', (req, res) => {
+  res.json({
+    service: 'FlowLens Backend API',
+    status: 'online',
+    version: '1.0.0',
+    endpoints: {
+      health: 'GET /api/health',
+      scans: 'GET /api/scans',
+      createScan: 'POST /api/scans',
+      scanStatus: 'GET /api/scans/:scanId/status',
+      scanResults: 'GET /api/scans/:scanId/results',
+      scanEvidence: 'GET /api/scans/:scanId/evidence',
+    },
+  });
+});
+
 // Public Scan API Endpoints
 router.post('/scans', validateCreateScan, ScansController.createScan);
 router.get('/scans', ScansController.listScans);
